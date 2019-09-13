@@ -65,11 +65,11 @@
                                           (send ,channel ,form))))
                               channels
                               forms))
-         (new-bindings (mapcar (lambda (var channel)
+         (var-bindings (mapcar (lambda (var channel)
                                  `(,var (recv ,channel)))
                                vars
                                channels)))
     `(let ,chan-bindings
        ,@start-tasks
-       (let ,new-bindings
+       (let ,var-bindings
          ,@body))))
