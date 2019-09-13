@@ -2,6 +2,28 @@
 
 This is a simple Common Lisp library to evaluate some forms in parallel.
 
+* Installation
+
+/simple-parallel-tasks/ requires the /chanl/ library.
+
+** With Quicklisp
+
+Put the /simple-parallel-tasks/ directory in the /local-projects/ directory of
+/quicklisp/ and use:
+
+#+BEGIN_SRC lisp
+(ql:quickload "simple-parallel-tasks")
+#+END_SRC
+
+** With ASDF
+
+Put the directories of /simple-parallel-tasks/ and the dependencies where
+/ASDF/ can find them and use:
+
+#+BEGIN_SRC lisp
+(asdf:load-system "simple-parallel-tasks")
+#+END_SRC
+
 * API
 
 #+BEGIN_SRC lisp
