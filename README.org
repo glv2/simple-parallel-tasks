@@ -8,9 +8,6 @@ This is a simple Common Lisp library to evaluate some forms in parallel.
 
 ** With Quicklisp
 
-Put the /simple-parallel-tasks/ directory in the /local-projects/ directory of
-/quicklisp/ and use:
-
 #+BEGIN_SRC lisp
 (ql:quickload "simple-parallel-tasks")
 #+END_SRC
