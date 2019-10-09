@@ -9,4 +9,5 @@
   :author "Guillaume Le Vaillant"
   :license "GPL-3"
   :depends-on ("chanl")
+  :in-order-to ((test-op (test-op "simple-parallel-tasks-tests")))
   :components ((:file "simple-parallel-tasks")))

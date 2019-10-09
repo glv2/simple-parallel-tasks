@@ -79,3 +79,11 @@ Evaluation took:
 
 (NIL 7 NIL NIL 2)
 #+END_SRC
+
+* Tests
+
+The tests require the /fiveam/ library.
+
+#+BEGIN_SRC lisp
+(asdf:test-system "simple-parallel-tasks")
+#+END_SRC
