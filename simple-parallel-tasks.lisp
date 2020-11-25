@@ -4,29 +4,10 @@
 
 (defpackage :simple-parallel-tasks
   (:use :cl :chanl)
-  (:export #:plist #:pvalues #:plet #:pprog1 #:pprogn))
+  (:export #:pvalues #:plist #:plet #:pprog1 #:pprogn))
 
 (in-package :simple-parallel-tasks)
 
-
-(defmacro plist (&rest forms)
-  "Evaluate FORMS in parallel and return the results in a list."
-  (let* ((channels (loop repeat (length forms)
-                         collect (gensym)))
-         (bindings (mapcar (lambda (channel)
-                             `(,channel (make-instance 'bounded-channel)))
-                           channels))
-         (start-tasks (mapcar (lambda (channel form)
-                                `(pcall (lambda ()
-                                          (send ,channel ,form))))
-                              channels
-                              forms))
-         (results (mapcar (lambda (channel)
-                            `(recv ,channel))
-                          channels)))
-    `(let ,bindings
-       ,@start-tasks
-       (list ,@results))))
 
 (defmacro pvalues (&rest forms)
   "Evaluate FORMS in parallel and return the results as multiple values."
@@ -46,6 +27,10 @@
     `(let ,bindings
        ,@start-tasks
        (values ,@results))))
+
+(defmacro plist (&rest forms)
+  "Evaluate FORMS in parallel and return the results in a list."
+  `(multiple-value-list (pvalues ,@forms)))
 
 (defmacro plet (bindings &body body)
   "Like LET, but the BINDINGS are evaluated in parallel."
@@ -77,9 +62,10 @@
 (defmacro pprog1 (first-form &body forms)
   "Evaluate FIRST-FORM and FORMS in parallel and return the result of the
 evaluation of FIRST-FORM."
-  `(car (plist ,first-form ,@forms)))
+  `(nth-value 0 (pvalues ,first-form ,@forms)))
 
 (defmacro pprogn (&rest forms)
   "Evaluate FORMS in parallel and return the result of the evaluation of the
 last form."
-  `(car (last (plist ,@forms))))
+  (when forms
+    `(nth-value ,(1- (length forms)) (pvalues ,@forms))))
