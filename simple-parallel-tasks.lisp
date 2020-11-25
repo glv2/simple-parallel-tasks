@@ -1,10 +1,10 @@
 ;;; simple-parallel-tasks
-;;; Copyright 2019 Guillaume Le Vaillant
+;;; Copyright 2019-2020 Guillaume Le Vaillant
 ;;; This library is free software released under the GNU GPL-3 license.
 
 (defpackage :simple-parallel-tasks
   (:use :cl :chanl)
-  (:export #:plist #:pvalues #:plet))
+  (:export #:plist #:pvalues #:plet #:pprog1 #:pprogn))
 
 (in-package :simple-parallel-tasks)
 
@@ -73,3 +73,13 @@
        ,@start-tasks
        (let ,var-bindings
          ,@body))))
+
+(defmacro pprog1 (first-form &body forms)
+  "Evaluate FIRST-FORM and FORMS in parallel and return the result of the
+evaluation of FIRST-FORM."
+  `(car (plist ,first-form ,@forms)))
+
+(defmacro pprogn (&rest forms)
+  "Evaluate FORMS in parallel and return the result of the evaluation of the
+last form."
+  `(car (last (plist ,@forms))))

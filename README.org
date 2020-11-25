@@ -41,6 +41,20 @@ Evaluate /forms/ in parallel and return the results as multiple values.
 
 Like /let/, but the /bindings/ are evaluated in parallel.
 
+#+BEGIN_SRC lisp
+(defmacro pprog1 (first-form &body forms))
+#+END_SRC
+
+Evaluate /first-form/ and /forms/ in parallel and return the result of the
+evaluation of /first-form/.
+
+#+BEGIN_SRC lisp
+(defmacro pprogn (&rest forms))
+#+END_SRC
+
+Evaluate /forms/ in parallel and return the result of the evaluation of the
+last form.
+
 * Examples
 
 #+BEGIN_SRC lisp

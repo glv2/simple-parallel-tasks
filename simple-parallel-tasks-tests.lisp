@@ -1,5 +1,5 @@
 ;;; simple-parallel-tasks
-;;; Copyright 2019 Guillaume Le Vaillant
+;;; Copyright 2019-2020 Guillaume Le Vaillant
 ;;; This library is free software released under the GNU GPL-3 license.
 
 (defpackage :simple-parallel-tasks-tests
@@ -68,3 +68,20 @@
                                (y (sleep 1))
                                (z (sleep 1)))
                           (list x y z))))))
+
+(test pprog1
+  (is (equalp 'a (pprog1 'a)))
+  (is (equalp 10 (pprog1 (+ 4 6) (* 4 5))))
+  (is (equalp 1 (pprog1 1 2 3 4 5)))
+  (is (> 1.01 (duration (pprog1 (sleep 1)))))
+  (is (> 1.01 (duration (pprog1 (sleep 1) (sleep 1)))))
+  (is (> 1.01 (duration (pprog1 (sleep 1) (sleep 1) (sleep 1))))))
+
+(test pprogn
+  (is (null (pprogn)))
+  (is (equalp 'a (pprog1 'a)))
+  (is (equalp 20 (pprogn (+ 4 6) (* 4 5))))
+  (is (equalp 5 (pprogn 1 2 3 4 5)))
+  (is (> 1.01 (duration (pprogn (sleep 1)))))
+  (is (> 1.01 (duration (pprogn (sleep 1) (sleep 1)))))
+  (is (> 1.01 (duration (pprogn (sleep 1) (sleep 1) (sleep 1))))))
