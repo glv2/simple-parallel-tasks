@@ -1,5 +1,7 @@
 #+TITLE: simple-parallel-tasks
 
+The active repository is at https://codeberg.org/glv/simple-parallel-tasks
+
 This is a simple Common Lisp library to evaluate some forms in parallel.
 
 * Installation
